@@ -22,6 +22,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatChipsModule} from '@angular/material/chips';
 import { EditTaskComponent } from './task/edit-task/edit-task.component';
 import {MatSelectModule} from '@angular/material/select';
+import { HttpClientModule } from '@angular/common/http';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import {MatSelectModule} from '@angular/material/select';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     MatCardModule,
     MatInputModule,
     MatFormFieldModule,
@@ -48,7 +51,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatTableModule,
     MatIconModule,
     MatChipsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSortModule
 
 
   ],

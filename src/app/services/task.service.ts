@@ -84,4 +84,8 @@ export class TaskService {
     });
     return task;
   }
+  deleteTaskById(taskid : number){
+    console.log("delelted with Task Id" + taskid);
+    
+  }
 }

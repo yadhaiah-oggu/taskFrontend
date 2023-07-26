@@ -4,16 +4,21 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private isAuthenticated: boolean = false;
-  private token: string = ''; // JWT token
+  isAuthenticated: boolean = false;
+  token: string = ''; // JWT token
+
+  _baseUrl = environment.baseUrl;
+
 
   constructor(
-    private router : Router
+    private router : Router,
+    private http:HttpClient
   ) {
     // Check if the token exists in local storage during service initialization
     const storedToken = localStorage.getItem('token');

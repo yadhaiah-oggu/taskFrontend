@@ -26,6 +26,19 @@ export class AllTasksComponent {
     private taskService:TaskService
     ) {
       this.tasks = this.taskService.getAllTasks();
+
+      // this.quoteService.getQuotesList().subscribe(
+      //   (result) => {
+      //     this.QUOTE_DATA = result;
+      //     this.isLoading = false;
+      //     console.log(this.QUOTE_DATA);
+      //   },
+      //   (errorRes: any) => {
+      //     this.isLoading = false;
+      //     this.route.navigate(['/error']);
+      //   }
+      // );
+
     }
     ngOnInit(){
       
@@ -122,7 +135,7 @@ export class AllTasksComponent {
 
     if (userConfirmation) {
       // User clicked "OK"
-      console.log("Task with Id deleted" + taskid);
+      this.taskService.deleteTaskById(taskid);
       
     } else {
       // User clicked "Cancel"
