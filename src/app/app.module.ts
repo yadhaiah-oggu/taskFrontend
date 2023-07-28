@@ -22,9 +22,10 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatChipsModule} from '@angular/material/chips';
 import { EditTaskComponent } from './task/edit-task/edit-task.component';
 import {MatSelectModule} from '@angular/material/select';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule , HTTP_INTERCEPTORS} from '@angular/common/http';
 import { MatSortModule } from '@angular/material/sort';
-
+import { TokenInterceptorService } from './services/interceptors/token-interceptor.service';
+import {MatMenuModule} from '@angular/material/menu';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,8 +53,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatIconModule,
     MatChipsModule,
     MatSelectModule,
-    MatSortModule
-
+    MatSortModule,
+    MatMenuModule
 
   ],
   providers: [],

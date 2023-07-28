@@ -11,7 +11,6 @@ import { environment } from 'src/environments/environment.development';
 })
 export class AuthService {
   isAuthenticated: boolean = false;
-  token: string = ''; // JWT token
 
   _baseUrl = environment.baseUrl;
 
@@ -20,37 +19,38 @@ export class AuthService {
     private router : Router,
     private http:HttpClient
   ) {
-    // Check if the token exists in local storage during service initialization
-    const storedToken = localStorage.getItem('token');
-    if (storedToken) {
-      this.isAuthenticated = true;
-      this.token = storedToken;
-    }
   }
 
-  // Perform user login and get JWT token from the server
-  login(email: string, password: string){
-    // Replace 'YOUR_LOGIN_API_ENDPOINT' with your actual API endpoint for login
-    const loginUrl = 'YOUR_LOGIN_API_ENDPOINT';
-    const userData = { email, password };
-    this.isAuthenticated = true;
-    localStorage.setItem('token',"token");
-    return true;
+  login(userCredentials : any){
+    // return this.http.post(this._baseUrl + "auth/login", userCredentials);
+    return this.http.post(this._baseUrl + "auth/login", userCredentials).pipe(
+      tap((response : any) => {
+        const token = response.token ;
+        localStorage.setItem('token' , token);
+        localStorage.setItem('username',response.username);
+      })
+
+    );
+
+  }
+  register(userCredentials: any){
+    return this.http.post(this._baseUrl + "auth/register", userCredentials);
   }
 
   isLoggedIn(): boolean {
-    // Check if the user is logged in based on the presence of the token
-    return this.isAuthenticated;
+    return localStorage.getItem('token') != null;
   }
 
-  getToken(): string {
-    return this.token;
+  getToken(){
+    return localStorage.getItem('token');
   }
+
 
   logout(): void {
     this.isAuthenticated = false;
-    this.token = '';
-    localStorage.removeItem('token'); // Remove the token from local storage
+    localStorage.removeItem('token'); 
+    localStorage.removeItem('username'); 
+    // Remove the token from local storage
     this.router.navigate(['/login'])
   }
 }

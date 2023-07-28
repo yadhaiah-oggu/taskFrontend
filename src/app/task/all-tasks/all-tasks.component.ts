@@ -24,26 +24,23 @@ export class AllTasksComponent {
   constructor(
     private router : Router,
     private taskService:TaskService
-    ) {
-      this.tasks = this.taskService.getAllTasks();
-
-      // this.quoteService.getQuotesList().subscribe(
-      //   (result) => {
-      //     this.QUOTE_DATA = result;
-      //     this.isLoading = false;
-      //     console.log(this.QUOTE_DATA);
-      //   },
-      //   (errorRes: any) => {
-      //     this.isLoading = false;
-      //     this.route.navigate(['/error']);
-      //   }
-      // );
-
-    }
+    ) {}
+    datasourceFetched = new MatTableDataSource<any>();
     ngOnInit(){
+      this.taskService.getAllTasks().subscribe(
+        (result :any) =>{
+          this.tasks = result;
+          console.log(this.tasks);
+          this.datasourceFetched.data = result;
+          
+        },
+        (error: any) =>{
+          console.log(error.message);
+        }
+      );
       
-      this.displayedColumns = ['id', 'taskname','createdat', 'modifiedat', 'progress','actions'];
-      this.dataSource = new MatTableDataSource(this.tasks);
+      this.displayedColumns = ['id', 'taskname','status','createdat', 'updatedat', 'actions'];
+      this.dataSource = this.datasourceFetched;
     }
   // personal = [
   //   {
@@ -135,7 +132,18 @@ export class AllTasksComponent {
 
     if (userConfirmation) {
       // User clicked "OK"
-      this.taskService.deleteTaskById(taskid);
+      const myObserver = {
+        next: (x: any) => {
+        console.log(JSON.stringify(x));
+        alert(x.message);
+        this.ngOnInit();
+      },
+        error: (err: Error) => {
+          console.error(err.message);
+          this.ngOnInit();
+        }
+      };
+      this.taskService.deleteTaskById(taskid).subscribe(myObserver);
       
     } else {
       // User clicked "Cancel"
@@ -145,6 +153,18 @@ export class AllTasksComponent {
   }
   editTask(taskid:number){
     this.router.navigateByUrl('/home/edit-task/' + taskid);
+  }
+  updateTaskStatus(task: any,status : String){
+    task.status = status;
+
+    const myObserver = {
+      next: (x: any) => {console.log('updated task' + JSON.stringify(x));
+      alert("Updated successfully");
+      this.router.navigateByUrl('/home/all-tasks')
+    },
+      error: (err: Error) => console.error('Observer got an error: ' + err)
+    };
+    this.taskService.updateTask(task.id,task).subscribe(myObserver);
   }
 
 }

@@ -46,8 +46,15 @@ export class NewTaskComponent {
   }
 
   onSubmit(){
-    this.submitted = true;
-    console.log(this.form.value);
-    
-  }
+      this.submitted = true;
+      console.log(this.form.value);  
+      const myObserver = {
+        next: (x: any) => {console.log('added task' + JSON.stringify(x));
+        alert("Added successfully")
+        this.router.navigate(['/home/all-tasks']);
+      },
+        error: (err: Error) => console.error('Observer got an error: ' + err)
+      };
+      this.taskService.addTask(this.form.value).subscribe(myObserver);
+    }
 }

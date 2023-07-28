@@ -15,25 +15,9 @@
           />
         </mat-form-field>
   
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Created At</mat-label>
-          <input
-            matInput
-            type="text"
-            formControlName="createdat"
-          />
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="w-100" aria-disabled="true">
-            <mat-label>Updated At</mat-label>
-            <input
-              matInput
-              type="text"
-              formControlName="modifiedat"
-            />
-          </mat-form-field>
           <mat-form-field appearance="outline" class="w-100">
-            <mat-label>Progress</mat-label>
-            <mat-select formControlName="progress">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
               <mat-option *ngFor="let progress of progressOptions" [value]="progress">
                 {{ progress }}</mat-option>
             </mat-select>

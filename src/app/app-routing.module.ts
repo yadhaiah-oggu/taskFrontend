@@ -7,6 +7,7 @@ import { AllTasksComponent } from './task/all-tasks/all-tasks.component';
 import { SessionTimeOutComponent } from './shared/session-time-out/session-time-out.component';
 import { EditTaskComponent } from './task/edit-task/edit-task.component';
 import { RegisterComponent } from './auth/register/register.component';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/login' }, // Default route to redirect to login
@@ -20,7 +21,7 @@ const routes: Routes = [
       { path: 'all-tasks', component: AllTasksComponent },
       { path: 'new-task', component: NewTaskComponent },
       { path: 'edit-task/:taskid', component: EditTaskComponent },
-    ],
+    ], canActivate:[AuthGuard]
   },
   { path: 'session-timeout', component: SessionTimeOutComponent},
   { path: '**', redirectTo: '/login' } // Fallback route for any unknown URL

@@ -8,10 +8,14 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  username !: string;
   constructor(
     private router: Router,
     private authService:AuthService
     ) { }
+  ngOnInit(){
+    this.username = localStorage.getItem('username') || '';
+  }
 
   logout() {
     // Clear the JWT token and navigate back to the login page

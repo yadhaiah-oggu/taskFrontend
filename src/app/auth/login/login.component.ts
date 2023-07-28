@@ -10,17 +10,17 @@ import { SessionService } from 'src/app/services/session.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-
   loginForm: any = FormGroup;
   submitted = false;
   isLoggedIn: boolean = false;
   loginError: string = '';
-  
+  resposeData: any;
+
   constructor(
     private formBuilder: FormBuilder,
-    private authService : AuthService,
+    private authService: AuthService,
     private router: Router,
-    private sessionService : SessionService
+    private sessionService: SessionService
   ) {
     localStorage.clear();
   }
@@ -43,29 +43,16 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
-
-    if (this.submitted) {
-      console.log(this.loginForm.value);
+    console.log(this.loginForm.value);
+    this.authService.login(this.loginForm.value).subscribe(response => {
+      console.log(response)
       this.router.navigate(['/home']);
-      // this.authService.login(this.loginForm.value).subs(
-      //   (token: string) => {
-      //     localStorage.setItem('token', token); // Store the JWT token in the local storage
-      //     this.isLoggedIn = true;
-      //     this.sessionService.resetSessionTimer(token); // Start session timeout timer
-      //     this.router.navigate(['/home']); // Navigate to the home component after successful login
-      //   },
-      //   (error: any) => {
-      //     // Handle login error here
-      //     this.loginError = 'Invalid email or password.';
-      //     console.error('Login failed:', error);
-      //   }
-      // );
-  
-    }
+    }, error => {
+      console.log(error) ;
+      alert('Invalid Login Credentials');
+    })
   }
-
-  signup(){
+  signup() {
     this.router.navigate(['/register']);
   }
- 
 }
