@@ -26,6 +26,7 @@ import { HttpClientModule , HTTP_INTERCEPTORS} from '@angular/common/http';
 import { MatSortModule } from '@angular/material/sort';
 import { TokenInterceptorService } from './services/interceptors/token-interceptor.service';
 import {MatMenuModule} from '@angular/material/menu';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +55,8 @@ import {MatMenuModule} from '@angular/material/menu';
     MatChipsModule,
     MatSelectModule,
     MatSortModule,
-    MatMenuModule
+    MatMenuModule,
+
 
   ],
   providers: [],

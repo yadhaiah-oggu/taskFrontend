@@ -58,9 +58,14 @@ export class RegisterComponent {
           this.resposeData = result;
           console.log(this.resposeData);
           alert("Registered Successfully");
+          this.router.navigate(['/login']);
         }
-       })
-      this.router.navigate(['/login']);
+       },
+       (error) =>{
+        alert(error.error);
+        console.log(error.error);
+        
+       });
     }
   }
 
