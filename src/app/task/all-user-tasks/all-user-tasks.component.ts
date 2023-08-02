@@ -1,19 +1,16 @@
-
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {MatSort, MatSortModule} from '@angular/material/sort';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { Component, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { TaskService } from 'src/app/services/task.service';
 
 @Component({
-  selector: 'app-all-tasks',
-  templateUrl: './all-tasks.component.html',
-  styleUrls: ['./all-tasks.component.css']
+  selector: 'app-all-user-tasks',
+  templateUrl: './all-user-tasks.component.html',
+  styleUrls: ['./all-user-tasks.component.css']
 })
-export class AllTasksComponent {
+export class AllUserTasksComponent {
   @ViewChild(MatPaginator, { static: true }) paginator !: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort !: MatSort;
 
@@ -27,7 +24,7 @@ export class AllTasksComponent {
     ) {}
     datasourceFetched = new MatTableDataSource<any>();
     ngOnInit(){
-      this.taskService.getUserTasks().subscribe(
+      this.taskService.getAllTasks().subscribe(
         (result :any) =>{
           this.tasks = result;
           console.log(this.tasks);
@@ -42,74 +39,6 @@ export class AllTasksComponent {
       this.displayedColumns = ['id', 'taskname','status','createdat', 'updatedat', 'actions'];
       this.dataSource = this.datasourceFetched;
     }
-  //   {
-  //    id:1,
-  //    taskname:"meeting with manager",
-  //    createdat:Date.now(),
-  //    modifiedat:Date.now(),
-  //    progress:"Open"
-  //   },
-  //   {
-  //     id:2,
-  //     taskname:"fixing frontend Issues",
-  //     createdat:Date.now(),
-  //     modifiedat:Date.now(),
-  //     progress:"InProgress"
-  //    },
-  //    {
-  //     id:3,
-  //     taskname:"fixing backend Issues",
-  //     createdat:Date.now(),
-  //     modifiedat:Date.now(),
-  //     progress:"Completed"
-  //    },
-  //    {
-  //     id:4,
-  //     taskname:"API testing",
-  //     createdat:Date.now(),
-  //     modifiedat:Date.now(),
-  //     progress:"InProgress"
-  //    },
-  //    {
-  //     id:4,
-  //     taskname:"API testing",
-  //     createdat:Date.now(),
-  //     modifiedat:Date.now(),
-  //     progress:"InProgress"
-  //    },
-  //    {
-  //     id:4,
-  //     taskname:"API testing",
-  //     createdat:Date.now(),
-  //     modifiedat:Date.now(),
-  //     progress:"InProgress"
-  //    },
-  //    {
-  //     id:4,
-  //     taskname:"API testing",
-  //     createdat:Date.now(),
-  //     modifiedat:Date.now(),
-  //     progress:"InProgress"
-  //    },
-  //    {
-  //     id:4,
-  //     taskname:"API testing",
-  //     createdat:Date.now(),
-  //     modifiedat:Date.now(),
-  //     progress:"InProgress"
-  //    },
-  //    {
-  //     id:4,
-  //     taskname:"API testing",
-  //     createdat:Date.now(),
-  //     modifiedat:Date.now(),
-  //     progress:"InProgress"
-  //    },
-  // ];
-
-  // displayedColumns = ['id', 'taskname','createdat', 'modifiedat', 'progress','actions'];
-  // dataSource = new MatTableDataSource(this.personal);
-
   ngAfterViewInit(){
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -165,5 +94,4 @@ export class AllTasksComponent {
     };
     this.taskService.updateTask(task.id,task).subscribe(myObserver);
   }
-
 }

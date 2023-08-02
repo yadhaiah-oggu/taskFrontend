@@ -7,6 +7,20 @@
     <!-- Sign In For m -->
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
+      <div *ngIf="f.role.invalid && (f.role.toruched || f.role.dirty)">
+        <mat-error *ngIf="f.role.errors?.required">
+          Role is required
+        </mat-error>
+      </div>
+      <mat-form-field appearance="outline" class="w-100 mt-2">
+        <mat-label>Role</mat-label>
+        <mat-select formControlName="role">
+          <mat-option value="ADMIN">Admin</mat-option>
+          <mat-option value="USER">User</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
       <div *ngIf="f.name.invalid && f.name.touched">
         <mat-error *ngIf="f.name.errors?.required">
           Name is required

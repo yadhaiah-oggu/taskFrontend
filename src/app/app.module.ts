@@ -26,6 +26,10 @@ import { HttpClientModule , HTTP_INTERCEPTORS} from '@angular/common/http';
 import { MatSortModule } from '@angular/material/sort';
 import { TokenInterceptorService } from './services/interceptors/token-interceptor.service';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatListModule} from '@angular/material/list';
+import {MatDialogModule} from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
+import { AllUserTasksComponent } from './task/all-user-tasks/all-user-tasks.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +41,9 @@ import {MatMenuModule} from '@angular/material/menu';
     AllTasksComponent,
     NewTaskComponent,
     SessionTimeOutComponent,
-    EditTaskComponent
+    EditTaskComponent,
+    ConfirmationDialogComponent,
+    AllUserTasksComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +62,8 @@ import {MatMenuModule} from '@angular/material/menu';
     MatSelectModule,
     MatSortModule,
     MatMenuModule,
+    MatListModule,
+    MatDialogModule
 
 
   ],

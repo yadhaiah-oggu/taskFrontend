@@ -82,8 +82,14 @@ export class TaskService {
     // const url = 'http://localhost:8080/api/tasks';
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get( this._baseUrl +"admin/tasks", { headers });
+  }
+  getUserTasks(){
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get( this._baseUrl + "tasks", { headers });
   }
+  
 
   getTaskById(taskid: number){
     const token = localStorage.getItem('token');

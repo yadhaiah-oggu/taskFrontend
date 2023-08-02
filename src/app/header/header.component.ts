@@ -9,12 +9,14 @@ import { AuthService } from '../services/auth.service';
 })
 export class HeaderComponent {
   username !: string;
+  userrole !: string;
   constructor(
     private router: Router,
     private authService:AuthService
     ) { }
   ngOnInit(){
     this.username = localStorage.getItem('username') || '';
+    this.userrole = localStorage.getItem('userrole') || '';
   }
 
   logout() {

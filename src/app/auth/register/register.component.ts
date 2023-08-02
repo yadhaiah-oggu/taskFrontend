@@ -40,6 +40,7 @@ export class RegisterComponent {
         Validators.minLength(6),
         passwordValidator() // Add the custom validator here
       ]],
+      role:['',Validators.required]
     });
 
     this.sessionService.logout();

@@ -1,0 +1,140 @@
+<div class="row">
+    <div class="col"></div>
+    <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+      <div class="mt-5">
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            placeholder="Search"
+            (keyup)="applyFilter($event.target)"
+            #input
+          />
+        </mat-form-field>
+      </div>
+      <mat-card>
+        <mat-card-content>
+          <table mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+              <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+            </ng-container>
+  
+            <ng-container matColumnDef="taskname">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Task Name</th>
+              <td mat-cell *matCellDef="let row">{{ row.taskname }}</td>
+            </ng-container>
+  
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+              <td mat-cell *matCellDef="let row">
+                <span *ngIf="row.status == 'Open'" class="text-danger"
+                  >{{ row.status }}
+                </span>
+  
+                <span *ngIf="row.status == 'InProgress'" class="text-primary"
+                  >{{ row.status }}
+                </span>
+                <span *ngIf="row.status == 'Completed'" class="text-success"
+                  >{{ row.status }}
+                </span>
+              </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="createdat">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Created At
+              </th>
+              <td mat-cell *matCellDef="let row">
+                {{ row.createdat | date : "short" }}
+              </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="updatedat">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Updated At
+              </th>
+              <td mat-cell *matCellDef="let row">
+                {{ row.updatedat | date : "short" }}
+              </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
+              <td mat-cell *matCellDef="let row">
+                <button
+                  mat-stroked-button
+                  color="primary"
+                  class="m-2"
+                  (click)="editTask(row.id)"
+                >
+                  Edit
+                </button>
+                <button
+                  mat-stroked-button
+                  color="warn"
+                  class="m-2"
+                  (click)="deleteTask(row.id)"
+                >
+                  Delete
+                </button>
+  
+                <button
+                  mat-icon-button
+                  [matMenuTriggerFor]="OpenStatusmenu"
+                  *ngIf="row.status == 'Open'"
+                >
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #OpenStatusmenu="matMenu">
+                  <button mat-menu-item (click)="updateTaskStatus(row,'InProgress')">
+                    <span>InProgress</span>
+                  </button>
+                  <button mat-menu-item (click)="updateTaskStatus(row,'Completed')">
+                    <span>Completed</span>
+                  </button>
+                </mat-menu>
+                <button
+                  mat-icon-button
+                  [matMenuTriggerFor]="InProgressStatusmenu"
+                  *ngIf="row.status == 'InProgress'"
+                >
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #InProgressStatusmenu="matMenu">
+                  <button mat-menu-item (click)="updateTaskStatus(row,'Completed')">
+                    <span>Completed</span>
+                  </button>
+                </mat-menu>
+                <button
+                  mat-icon-button
+                  [matMenuTriggerFor]="CompletedStatusmenu"
+                  *ngIf="row.status == 'Completed'"
+                >
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #CompletedStatusmenu="matMenu">
+                  <button mat-menu-item>
+                    <span>No Action</span>
+                  </button>
+                </mat-menu>
+              </td>
+            </ng-container>
+  
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  
+            <!-- Row shown when there is no matching data. -->
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">
+                No data matching the filter "{{ input.value }}"
+              </td>
+            </tr>
+          </table>
+  
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col"></div>
+  </div>
+  

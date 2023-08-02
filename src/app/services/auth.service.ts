@@ -28,6 +28,7 @@ export class AuthService {
         const token = response.token ;
         localStorage.setItem('token' , token);
         localStorage.setItem('username',response.username);
+        localStorage.setItem('userrole',response.userrole);
       })
 
     );
@@ -50,6 +51,7 @@ export class AuthService {
     this.isAuthenticated = false;
     localStorage.removeItem('token'); 
     localStorage.removeItem('username'); 
+    localStorage.removeItem('userrole');
     // Remove the token from local storage
     this.router.navigate(['/login'])
   }

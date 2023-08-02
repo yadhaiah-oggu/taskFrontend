@@ -21,7 +21,10 @@
           <a class="nav-link active" aria-current="page" [routerLink]="'/home/all-tasks'">Task List</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="'/home/new-task'">New Task</a>
+          <a class="nav-link" aria-current="page" [routerLink]="'/home/new-task'">New Task</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" [routerLink]="'/home/all-user-tasks'" *ngIf="userrole == 'ADMIN'">All Tasks</a>
         </li>
       </ul>
       <form class="d-flex">
