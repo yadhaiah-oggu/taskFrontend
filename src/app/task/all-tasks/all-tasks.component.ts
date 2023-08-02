@@ -7,6 +7,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { Router } from '@angular/router';
 import { TaskService } from 'src/app/services/task.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-all-tasks',
@@ -126,29 +127,69 @@ export class AllTasksComponent {
   }
   
   deleteTask(taskid:number){
-    const message: string = "Are you sure you want to delete?";
-    const userConfirmation: boolean = window.confirm(message);
 
-    if (userConfirmation) {
-      // User clicked "OK"
-      const myObserver = {
-        next: (x: any) => {
-        console.log(JSON.stringify(x));
-        alert(x.message);
-        this.ngOnInit();
-      },
-        error: (err: Error) => {
-          console.error(err.message);
+
+
+    Swal.fire({
+      title: 'Are you sure you want to delete?',
+      text: 'This process is irreversible.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No'
+      }).then((result) => {
+      if (result.value) {
+
+        const myObserver = {
+          next: (x: any) => {
+          console.log(JSON.stringify(x));
+          Swal.fire(
+            'Deleted!',
+            x.message,
+            'success'
+            );
+          // alert(x.message);
           this.ngOnInit();
-        }
-      };
-      this.taskService.deleteTaskById(taskid).subscribe(myObserver);
+        },
+          error: (err: Error) => {
+            console.error(err.message);
+            Swal.fire(
+              'Oops..!',
+             err.message,
+              'error'
+              )
+            this.ngOnInit();
+          }
+        };
+        this.taskService.deleteTaskById(taskid).subscribe(myObserver);
+      } 
+      })
+
+
+
+    // const message: string = "Are you sure you want to delete?";
+    // const userConfirmation: boolean = window.confirm(message);
+
+    // if (userConfirmation) {
+    //   // User clicked "OK"
+    //   const myObserver = {
+    //     next: (x: any) => {
+    //     console.log(JSON.stringify(x));
+    //     alert(x.message);
+    //     this.ngOnInit();
+    //   },
+    //     error: (err: Error) => {
+    //       console.error(err.message);
+    //       this.ngOnInit();
+    //     }
+    //   };
+    //   this.taskService.deleteTaskById(taskid).subscribe(myObserver);
       
-    } else {
-      // User clicked "Cancel"
-      console.log("You clicked on cancel");
+    // } else {
+    //   // User clicked "Cancel"
+    //   console.log("You clicked on cancel");
       
-    }
+    // }
   }
   editTask(taskid:number){
     this.router.navigateByUrl('/home/edit-task/' + taskid);
@@ -158,10 +199,22 @@ export class AllTasksComponent {
 
     const myObserver = {
       next: (x: any) => {console.log('updated task' + JSON.stringify(x));
-      alert("Updated successfully");
+      // alert("Updated successfully");
+      Swal.fire(
+        'Updated',
+        'Updated successfully!',
+        'success'
+        )
       this.router.navigateByUrl('/home/all-tasks')
     },
-      error: (err: Error) => console.error('Observer got an error: ' + err)
+      error: (err: Error) =>{
+        console.error('Observer got an error: ' + err);
+        Swal.fire(
+          'Oops..!',
+          err.message,
+          'error'
+        );
+      } 
     };
     this.taskService.updateTask(task.id,task).subscribe(myObserver);
   }

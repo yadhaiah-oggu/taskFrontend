@@ -36,7 +36,7 @@ export class AllUserTasksComponent {
         }
       );
       
-      this.displayedColumns = ['id', 'taskname','status','createdat', 'updatedat', 'actions'];
+      this.displayedColumns = ['id', 'taskname','status', 'username','createdat', 'updatedat','actions'];
       this.dataSource = this.datasourceFetched;
     }
   ngAfterViewInit(){
@@ -88,7 +88,7 @@ export class AllUserTasksComponent {
     const myObserver = {
       next: (x: any) => {console.log('updated task' + JSON.stringify(x));
       alert("Updated successfully");
-      this.router.navigateByUrl('/home/all-tasks')
+      this.router.navigateByUrl('/home/all-user-tasks')
     },
       error: (err: Error) => console.error('Observer got an error: ' + err)
     };

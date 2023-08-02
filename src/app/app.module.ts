@@ -30,6 +30,8 @@ import {MatListModule} from '@angular/material/list';
 import {MatDialogModule} from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
 import { AllUserTasksComponent } from './task/all-user-tasks/all-user-tasks.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
 
 @NgModule({
   declarations: [
@@ -63,7 +65,8 @@ import { AllUserTasksComponent } from './task/all-user-tasks/all-user-tasks.comp
     MatSortModule,
     MatMenuModule,
     MatListModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule
 
 
   ],

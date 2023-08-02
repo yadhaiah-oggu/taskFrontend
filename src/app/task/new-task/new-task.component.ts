@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskService } from 'src/app/services/task.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-new-task',
@@ -50,10 +51,22 @@ export class NewTaskComponent {
       console.log(this.form.value);  
       const myObserver = {
         next: (x: any) => {console.log('added task' + JSON.stringify(x));
-        alert("Added successfully")
+        // alert("Added successfully")
+        Swal.fire(
+          'Added',
+          'Added successfully!',
+          'success'
+          );
         this.router.navigate(['/home/all-tasks']);
       },
-        error: (err: Error) => console.error('Observer got an error: ' + err)
+        error: (err: Error) => {
+          console.error('Observer got an error: ' + err);
+          Swal.fire(
+            'Oops ..!',
+            err.message,
+            'error'
+            );
+      }
       };
       this.taskService.addTask(this.form.value).subscribe(myObserver);
     }

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { SessionService } from 'src/app/services/session.service';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -58,12 +59,14 @@ export class RegisterComponent {
         if(result !== null){
           this.resposeData = result;
           console.log(this.resposeData);
-          alert("Registered Successfully");
+          // alert("Registered Successfully");
+          Swal.fire('Success!', 'Registration successful!', 'success');
           this.router.navigate(['/login']);
         }
        },
        (error) =>{
-        alert(error.error);
+        // alert(error.error);
+        Swal.fire('Oops..!', error.error, 'error');
         console.log(error.error);
         
        });

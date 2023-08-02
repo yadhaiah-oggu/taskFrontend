@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { SessionService } from 'src/app/services/session.service';
+import Swal from 'sweetalert2';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +22,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private _snackBar: MatSnackBar
   ) {
     localStorage.clear();
   }
@@ -29,7 +32,8 @@ export class LoginComponent implements OnInit {
     return this.loginForm.controls;
   }
 
-  ngOnInit() {
+  ngOnInit() {   
+
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
@@ -44,12 +48,15 @@ export class LoginComponent implements OnInit {
       return;
     }
     console.log(this.loginForm.value);
-    this.authService.login(this.loginForm.value).subscribe(response => {
-      console.log(response)
+    this.authService.login(this.loginForm.value).subscribe(
+      (response) => {
+      console.log(response);
+      this._snackBar.open("Login Successful", "Close");
       this.router.navigate(['/home']);
-    }, error => {
+    },
+    (error) => {
       console.log(error) ;
-      alert('Invalid Login Credentials');
+      Swal.fire(error.error);
     })
   }
   signup() {
