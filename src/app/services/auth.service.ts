@@ -82,15 +82,16 @@ export class AuthService {
 
 
 
-
-  
-
   isLoggedIn(): boolean {
     return localStorage.getItem('token') != null;
   }
 
   getToken(){
     return localStorage.getItem('token');
+  }
+
+  getUserRole(){
+    return localStorage.getItem('userrole');
   }
 
 

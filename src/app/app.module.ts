@@ -31,6 +31,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
 import { AllUserTasksComponent } from './task/all-user-tasks/all-user-tasks.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { UnauthorizedErrorComponent } from './shared/unauthorized-error/unauthorized-error.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     SessionTimeOutComponent,
     EditTaskComponent,
     ConfirmationDialogComponent,
-    AllUserTasksComponent
+    AllUserTasksComponent,
+    UnauthorizedErrorComponent
   ],
   imports: [
     BrowserModule,
